@@ -1,0 +1,25 @@
+{
+  "name": "plunder",
+  "version": "0.1.0",
+  "description": "A simple turn-based html game",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.tamu.edu/samerfarqui/315-game-CSR.git"
+  },
+  "author": "Caleb Perkins (calebp@tamu.edu)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.tamu.edu/samerfarqui/315-game-CSR/issues"
+  },
+  "homepage": "https://github.tamu.edu/samerfarqui/315-game-CSR#readme"
+}
