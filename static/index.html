@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<!--
+  This page implements a functional prototype for Plunder, the game being developed by Team CSR for CSCE 315 at Texas A&M.
+-->
+
+<html>
+
+<head>
+    <title>Plunder</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    
+    <!--
+      socket.io.js will be provided by the web server.
+    -->
+    
+    <script src="/socket.io/socket.io.js"></script>
+    
+</head>
+
+<body>
+    
+    <div class="header">
+        <div class="title">PLUNDER v0.0.1</div>
+    </div>
+    
+    <div class="content">
+        
+        <div id="intro">
+                <p>
+                    This is a functional prototype for Plunder.  Use the buttons below to play the game.
+                </p>
+        </div>
+        
+        <div id="input">
+            
+            <div id="ship_commands">
+                Ship Selection:
+                <form method="post" action="index.html">
+                    <input id="anj_button" type=button value="Anjelita"/> <br>
+                    <input id="har_button" type="button" value="Hartley"/> <br>
+                    <input id="ber_button" type="button" value="Bernkastel"/> <br>
+                    <input id="ver_button" type="button" value="Veronica"/> <br>
+                </form>
+            </div>
+
+            <div id="core_commands">
+                Command Selection:
+                <form method="post" action="index.html">
+                    <input id="atk_button" type="button" value="Attack"/> <br>
+                    <input id="repres_button" type="button" value="Repair & Restock"/> <br>
+                    <input id="repo_button" type="button" value="Reposition"/> <br>
+                    <input id="pldr_button" type="button" value="Plunder!"/> <br>
+                    <input id="spec_button" type="button" value="Special"/> <br>
+                </form>
+            </div>
+            
+        </div>
+        
+        <div id="output">
+            <textarea id="display" wrap=on readonly></textarea>
+            <textarea id="status" rows=1 readonly>HP:          Status:        </textarea>
+        </div>
+        
+    </div>
+    
+    <!--
+      JS Code
+    -->
+    <script src="js/base.js"></script>
+    
+</body>
+
+</html>

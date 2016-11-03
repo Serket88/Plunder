@@ -1,0 +1,100 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14pt;
+}
+
+/*  =============  HEADER FORMATTING  ============  */
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 2.5rem;
+
+  background: linear-gradient(to bottom right, #184d7a, #c098d1);
+  color: white;
+  font-size: 1.25rem;
+  overflow: clear;
+}
+
+.header .status {
+  margin-top: 1.2rem;
+  margin-right: 2rem;
+  float: right;
+}
+
+.header .title {
+  margin-top: 0.6rem;
+  margin-left: 2rem;
+}
+
+/*  =============  CONTENT FORMATTING  ============  */
+
+.content {
+    position: fixed;
+    top:  2.7rem;
+    width: 100%;
+    bottom:  0;
+    padding:  1rem;
+    font-family:  "Helvetica Neue", sans-serif;
+    font-size:  0.9rem;
+    display : block;
+}
+
+#intro {
+    margin-top: -15px;
+}
+
+/*  =============  INPUT FORMATTING  ============  */
+
+input[type=button] {
+    padding: 5px;
+    margin: 2px;
+    width: 120px;
+}
+
+#input {
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+#ship_commands {
+    vertical-align: top;
+    float: left;
+    margin-left: 50px;
+    width: 25%;
+    height: 100%;
+}
+
+#core_commands {
+    vertical-align: top;
+    margin-left: 35%;
+}
+
+/*  =============  OUTPUT FORMATTING  ============  */
+
+#output {
+    float: right;
+    width: 50%;
+    height: 100%;
+    margin-top: -15px;
+}
+
+#display {
+    resize: none;
+    overflow-y: scroll;
+    width: 90%;
+    height: 70%;
+    vertical-align: top;
+}
+
+#status {
+    resize: none;
+    width: 90%;
+    margin-top: 20px;
+    vertical-align: bottom;
+    text-align: center;
+    font-size: 24pt;
+}
