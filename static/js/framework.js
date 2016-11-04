@@ -5,45 +5,65 @@
 //  ================  GLOBAL VARIABLES  ================
 
 socket = io();
+output();               //  I THINK THIS WORKS
 
 //  ================  BUTTON HANDLERS  ================
 
-//  TODO -- there has got to be a better way to do this.
-
 //  When a ship button is clicked, call select with the appropriate ship passed
 
-$('#anj_button').click({
-    var shipType = 'anjelita';
+$('#anj_button').click(function(){
+    var shipType = '[Anjelita selected]';
     select(shipType);
 });
 
-/*
-$('#har_button').click(select(hartley));
+$('#har_button').click(function() {
+    var shipType = '[Hartley selected]';
+    select(shipType);
+});
 
-$('#ber_button').click(select(bernkastel));
+$('#ber_button').click(function() {
+    var shipType = '[Bernkastel selected]';
+    select(shipType);
+});
 
-$('#ver_button').click(select(veronica));
-*/
+$('#ver_button').click(function() {
+    var shipType = '[Veronica selected]';
+    select(shipType);
+});
 
 //  When an action is clicked, call the appropriate function
 
-$('#atk_button').click(msgTest);
+$('#atk_button').click(function() {
+    var actType = '[Attack selected]';
+    action(actType);
+});
 
-/*
-$('#repres_button').click(console.log("repres"));
-$('#repo_button').click(reposition);
-$('#pldr_button').click(plunder);
-$('#spec_button').click(special(ship));
-*/
+$('#repres_button').click(function() {
+    var actType = '[Repair & Restock selected]';
+    action(actType);
+});
+
+$('#repo_button').click(function() {
+    var actType = '[Reposition selected]';
+    action(actType);
+});
+
+$('#pldr_button').click(function() {
+    var actType = '[Plunder selected]';
+    action(actType);
+});
+
+$('#spec_button').click(function() {
+    var actType = '[Special selected]';
+    action(actType);
+});
 
 //  ================  UPDATE HANDLERS  ================
 
-function msgTest() {
-    var content = 'test message';
+function displayMessage(msg) {
     socket.emit('dispMsg', {
-        content: content,
+        content: msg,
     });
-    console.log("Message sent to server");
 }
 
 function output() {

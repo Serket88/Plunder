@@ -1,11 +1,9 @@
+//  Test functions to be replaced with things that actually do the game
+
 function select(shipType) {
-    socket.emit('dispMsg', {
-        content: shipType,
-    });
+    displayMessage(shipType);
 }
 
 function action(actType) {
-    socket.emit('dispMsg', {
-        content: actType,
-    });
+    displayMessage(actType);
 }
