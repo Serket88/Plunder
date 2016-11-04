@@ -31,6 +31,7 @@ function digest(input) {
 // representing the connection.
 
 io.sockets.on('connection', function (conn) {
+    console.log("connection established");
     
     // JavaScript functions are 'closures', which means they keep references to
     // local variables in the scope they were created.
@@ -69,6 +70,17 @@ io.sockets.on('connection', function (conn) {
   });
   */
     
+    conn.on('dispMsg', function(msg) {
+        if (msg && msg.content) {
+            var globalMsg = {
+                content: msg.content
+            };
+            io.emit('dispMsg', globalMsg);
+            console.log("Server received message, sent it back");
+        }
+        //  Invalid messages are ignored
+    });
+
     conn.on('chat', function (msg) {
         if (msg && msg.content) {
             // Broadcast this message to everyone in the room.

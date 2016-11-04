@@ -9,7 +9,7 @@
 <head>
     <title>Plunder</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
-    
+    <script src="lib/jquery-2.2.2.js"></script>
     <!--
       socket.io.js will be provided by the web server.
     -->
@@ -35,24 +35,20 @@
         <div id="input">
             
             <div id="ship_commands">
-                Ship Selection:
-                <form method="post" action="index.html">
-                    <input id="anj_button" type=button value="Anjelita"/> <br>
-                    <input id="har_button" type="button" value="Hartley"/> <br>
-                    <input id="ber_button" type="button" value="Bernkastel"/> <br>
-                    <input id="ver_button" type="button" value="Veronica"/> <br>
-                </form>
+                <p>Ship Selection:</p>
+                <input id="anj_button" type=button value="Anjelita"/> <br>
+                <input id="har_button" type="button" value="Hartley"/> <br>
+                <input id="ber_button" type="button" value="Bernkastel"/> <br>
+                <input id="ver_button" type="button" value="Veronica"/> <br>
             </div>
 
             <div id="core_commands">
-                Command Selection:
-                <form method="post" action="index.html">
-                    <input id="atk_button" type="button" value="Attack"/> <br>
-                    <input id="repres_button" type="button" value="Repair & Restock"/> <br>
-                    <input id="repo_button" type="button" value="Reposition"/> <br>
-                    <input id="pldr_button" type="button" value="Plunder!"/> <br>
-                    <input id="spec_button" type="button" value="Special"/> <br>
-                </form>
+                <p>Command Selection:</p>
+                <input id="atk_button" type="button" value="Attack"/> <br>
+                <input id="repres_button" type="button" value="Repair & Restock"/> <br>
+                <input id="repo_button" type="button" value="Reposition"/> <br>
+                <input id="pldr_button" type="button" value="Plunder!"/> <br>
+                <input id="spec_button" type="button" value="Special"/> <br>
             </div>
             
         </div>
@@ -67,7 +63,8 @@
     <!--
       JS Code
     -->
-    <script src="js/base.js"></script>
+    <script src="js/framework.js"></script>
+    <script src="js/menu.js"></script>
     
 </body>
 
