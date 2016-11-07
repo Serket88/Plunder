@@ -38,6 +38,32 @@ function repoFlip() {
     }
 }
 
+function isDead(playerID) {
+    if (playerID == "player1") {
+        //  Check to see if Player 1 is dead
+        if (player1.hp <= 0) {
+            //  Player 1 is dead
+            if (playerID == clientID) {
+                //  Make sure that only the dead client sends to server
+                var deadResult = {content: "Player 1's ship has been completely destroyed!  GAME OVER"};
+                socket.emit('dispMsg', deadResult);
+            }
+            //  Possibly disable all buttons here
+        }
+    } else if (playerID == "player2") {
+        //  Check to see if Player 2 is dead
+        if (player2.hp <= 0) {
+            //  Player 2 is dead
+            if (playerID == clientID) {
+                //  Make sure that only the dead client sends to server
+                var deadResult = {content: "Player 2's ship has been completely destroyed!  GAME OVER"};
+                socket.emit('dispMsg', deadResult);
+            }
+            //  Possibly disable all buttons here
+        }
+    }
+}
+
 //  ================  PROGRAM CONTROL  ================
 
 socket.on('loadPlayer', function(msg) {
@@ -86,6 +112,9 @@ socket.on('attack', function(atkData) {
                 var atkResult = {content: "Player 1 attacked and successfully hit Player 2, dealing " + dmgRoll + " damage!"};
                 socket.emit('dispMsg', atkResult);
             }
+
+            //  check if player2 is dead
+            isDead("player2");
         } else {
             //  send to server
             if (atkData.id1 == clientID) {
@@ -122,6 +151,9 @@ socket.on('attack', function(atkData) {
                 var atkResult = {content: "Player 2 attacked and successfully hit Player 1, dealing " + dmgRoll + " damage!"};
                 socket.emit('dispMsg', atkResult);
             }
+
+            //  check if player1 is dead
+            isDead("player1");
         } else {
             //  send to server
             if (atkData.id1 == clientID) {
@@ -280,6 +312,8 @@ socket.on('special', function(specData) {
                     var atkResult = {content: "Player 1 activated their special IMPERIAL DISCIPLINE power, dealing " + dmgRoll + " damage to Player 2 and restocking all ammunition"};
                     socket.emit('dispMsg', atkResult);
                 }
+                //  Check to see if player2 is dead
+                isDead("player2");
             } else {
                 if (specData.id1 == clientID) {
                     var atkResult = {content: "Player 1 activated their special IMPERIAL DISCIPLINE power, restoring all ammunition but missing their attack."};
@@ -309,6 +343,9 @@ socket.on('special', function(specData) {
                 var hellResult = {content: "Player 1 activated their special HELLFIRE BARRAGE ability, dealing a whopping " + dmgRoll + " damage to Player 2"};
                 socket.emit('dispMsg', hellResult);
             }
+
+            //  Check to see if player2 is dead
+            isDead("player2");
         }
     } else if (specData.id1 == "player2") {
         //  Player 2 is using the special
@@ -332,6 +369,9 @@ socket.on('special', function(specData) {
                     var atkResult = {content: "Player 2 activated their special IMPERIAL DISCIPLINE power, dealing " + dmgRoll + " to Player 1 and restocking all ammunition"};
                     socket.emit('dispMsg', atkResult);
                 }
+
+                //  Check to see if player1 is dead
+                isDead("player1");
             }
             player2.ammo = 3;
 
@@ -360,6 +400,9 @@ socket.on('special', function(specData) {
                 var hellResult = {content: "Player 2 activated their special HELLFIRE BARRAGE ability, dealing a whopping " + dmgRoll + " damage to Player 1"};
                 socket.emit('dispMsg', hellResult);
             }
+
+            //  Check to see if Player1 is dead
+            isDead("player1");
         }
     }
 });
