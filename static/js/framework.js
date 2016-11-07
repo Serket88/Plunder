@@ -2,73 +2,141 @@
     Handles both global variables and event handlers for the buttons.  Anything that involves the user interface framework should go in here.
 */
 
+/*  TODO
+        - Create a function that disables a specific ship button
+        - Create a function that disables all ship buttons
+        - Create a function that disables/enables the special button
+        - Create a function that disables/enables all action buttons
+        - add reenable functionality to repoflip
+        - add a turnChecker to see if the special should be enabled
+        - add a function to add special charge based on the ship and action
+        - add special charging functionality
+*/
+
 //  ================  GLOBAL VARIABLES  ================
 
 socket = io();
-output();               //  I THINK THIS WORKS
+
+//  ================  HELPER FUNCTIONS  ================
+
+function getOtherId(localId) {
+    if (clientID == "player1") {
+        return "player2";
+    } else {
+        return "player1";
+    }
+}
 
 //  ================  BUTTON HANDLERS  ================
 
-//  When a ship button is clicked, call select with the appropriate ship passed
+//  When a button is pressed, take the appropriate data and send it to the server's shipSelect function.
 
-$('#anj_button').click(function(){
-    var shipType = '[Anjelita selected]';
-    select(shipType);
+//  TODO -- possibly move the actual ship data server-side
+
+$('#anj_button').click(function() {
+    var anjData = {
+        id: clientID,
+        name: "Anjelita",
+        acc: 5,
+        hp: 45,
+        pow: 2,
+        man: 13,
+        fer: 3
+    };
+    socket.emit('shipSelect', anjData);
+    console.log("Anjelita selection sent to server");
 });
 
 $('#har_button').click(function() {
-    var shipType = '[Hartley selected]';
-    select(shipType);
+    var harData = {
+        id: clientID,
+        name: "Hartley",
+        acc: 6,
+        hp: 30,
+        pow: 3,
+        man: 15,
+        fer: 2
+    };
+    socket.emit('shipSelect', harData);
+    console.log("Hartley selection sent to server");
 });
 
 $('#ber_button').click(function() {
-    var shipType = '[Bernkastel selected]';
-    select(shipType);
+    var berData = {
+        id: clientID,
+        name: "Bernkastel",
+        acc: 2,
+        hp: 30,
+        pow: 5,
+        man: 13,
+        fer: 6
+    };
+    socket.emit('shipSelect', berData);
+    console.log("Bernkastel selection sent to server");
 });
 
 $('#ver_button').click(function() {
-    var shipType = '[Veronica selected]';
-    select(shipType);
+    var verData = {
+        id: clientID,
+        name: "Veronica",
+        acc: 5,
+        hp: 30,
+        pow: 6,
+        man: 11,
+        fer: 3
+    };
+    socket.emit('shipSelect', verData);
+    console.log("Veronica selection sent to server");
 });
 
 //  When an action is clicked, call the appropriate function
 
 $('#atk_button').click(function() {
-    var actType = '[Attack selected]';
-    action(actType);
+    var actData = {
+        id1: clientID,
+        id2: getOtherId(clientID),
+        action: "attack"
+    };
+    socket.emit('action', actData);
 });
 
 $('#repres_button').click(function() {
-    var actType = '[Repair & Restock selected]';
-    action(actType);
+    var actData = {
+        id: clientID,
+        action: "repres"
+    };
+    socket.emit('action', actData);
 });
 
 $('#repo_button').click(function() {
-    var actType = '[Reposition selected]';
-    action(actType);
+    var actData = {
+        id: clientID,
+        action: "reposition"
+    };
+    socket.emit('action', actData);
 });
 
 $('#pldr_button').click(function() {
-    var actType = '[Plunder selected]';
-    action(actType);
+    var actData = {
+        id1: clientID,
+        id2: getOtherId(clientID),
+        action: "plunder"
+    };
+    socket.emit('action', actData);
 });
 
 $('#spec_button').click(function() {
-    var actType = '[Special selected]';
-    action(actType);
+    var actData = {
+        id1: clientID,
+        id2: getOtherId(clientID),
+        action: "special"
+    };
+    socket.emit('action', actData);
 });
 
 //  ================  UPDATE HANDLERS  ================
 
-function displayMessage(msg) {
-    socket.emit('dispMsg', {
-        content: msg,
-    });
-}
-
-function output() {
-    socket.on('dispMsg', function(msg) {
-        console.log("Message received");
-        $('#display').append(msg.content + '\n');
-    });
-}
+//  DISPLAY MESSAGES
+socket.on('dispMsg', function(msg) {
+    $('#display').append(msg.content + '\n');
+});
