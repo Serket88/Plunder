@@ -2,10 +2,6 @@
     Handles both global variables and event handlers for the buttons.  Anything that involves the user interface framework should go in here.
 */
 
-//  TODO -- Implement a function that takes in an ID and message, compares it to the clientID, and sends it to dispMsg so you don't have all of those if statements
-
-//  TODO -- Implement a function to check for health less than or equal to zero, to be ran every time damage is dealt to make sure the lose condition doesn't occur.
-
 //  ================  GLOBAL VARIABLES  ================
 
 var clientID;
@@ -15,6 +11,13 @@ var player1 = new Ship();
 var player2 = new Ship();
 
 //  ================  HELPER FUNCTIONS  ================
+
+function printOnce(printData) {
+    if (printData.id == clientID) {
+        var printMsg = {content: printData.content};
+        socket.emit('dispMsg', printMsg);
+    }
+}
 
 function dice(max) {
     return Math.floor(Math.random() * (max - 2)) + 1;
@@ -43,23 +46,44 @@ function isDead(playerID) {
         //  Check to see if Player 1 is dead
         if (player1.hp <= 0) {
             //  Player 1 is dead
-            if (playerID == clientID) {
-                //  Make sure that only the dead client sends to server
-                var deadResult = {content: "Player 1's ship has been completely destroyed!  GAME OVER"};
-                socket.emit('dispMsg', deadResult);
-            }
+            console.log("Player 1 died");
+
+            var retVal = {
+                confirmed: true,
+                id: playerID
+            };
+
             //  Possibly disable all buttons here
+            return retVal;
+
+        } else {
+            var retVal = {
+                confirmed: false,
+                id: playerID
+            };
+
+            return retVal;
         }
     } else if (playerID == "player2") {
         //  Check to see if Player 2 is dead
         if (player2.hp <= 0) {
             //  Player 2 is dead
-            if (playerID == clientID) {
-                //  Make sure that only the dead client sends to server
-                var deadResult = {content: "Player 2's ship has been completely destroyed!  GAME OVER"};
-                socket.emit('dispMsg', deadResult);
-            }
+            console.log("Player 2 died");
+
+            var retVal = {
+                confirmed: true,
+                id: playerID
+            };
+
             //  Possibly disable all buttons here
+            return retVal;
+        } else {
+            var retVal = {
+                confirmed: false,
+                id: playerID
+            };
+
+            return retVal;
         }
     }
 }
@@ -70,7 +94,7 @@ socket.on('loadPlayer', function(msg) {
     if (!initialized) {
         clientID = msg.id;
         initialized = true;
-        console.log("Player initialized with the id " + clientID);
+        console.log(">  Initialized with the ID " + clientID);
     }
 });
 
@@ -85,13 +109,15 @@ socket.on('shipSelect', function(data) {
 });
 
 socket.on('attack', function(atkData) {
+    console.log("> " + atkData.id1 + "has attacked");
     if (atkData.id1 == "player1") {
         //  Player 1 is attacking Player 2
         if (player1.ammo == 0) {
-            var atkResult = {content: "Player 1 attempted to attack, but doesn't have enough ammo.  Perhaps now is a good time to Repair & Restock?"};
-            if (atkData.id1 == clientID) {
-                socket.emit('dispMsg', atkResult);
-            }
+            var atkResult = {
+                id: atkData.id1,
+                content: "Player 1 attempted to attack, but doesn't have enough ammo.  Perhaps now is a good time to Repair & Restock?"
+            };
+            printOnce(atkResult);
             return;
         }
 
@@ -107,30 +133,38 @@ socket.on('attack', function(atkData) {
             player2.hp -= dmgRoll;
 
             //  send to server
-            if (atkData.id1 == clientID) {
-                //  So that only one client sends the message
-                var atkResult = {content: "Player 1 attacked and successfully hit Player 2, dealing " + dmgRoll + " damage!"};
-                socket.emit('dispMsg', atkResult);
-            }
+            var atkResult = {
+                id: atkData.id1,
+                content: "Player 1 attacked and successfully hit Player 2, dealing " + dmgRoll + " damage!"
+            };
+            printOnce(atkResult);
 
             //  check if player2 is dead
-            isDead("player2");
+            if (isDead("player2").confirmed == true) {
+                var deadResult = {
+                    id: atkData.id1,
+                    content: "Player 1's ship has been completely destroyed!  GAME OVER"
+                };
+                printOnce(deadResult);
+            };
+
         } else {
             //  send to server
-            if (atkData.id1 == clientID) {
-                //  So that only one client sends the message
-                var atkResult = {content: "Player 1 attacked Player 2 and missed, dealing no damage"};
-                socket.emit('dispMsg', atkResult);
-            }
+            var atkResult = {
+                id: atkData.id1,
+                content: "Player 1 attacked Player 2 and missed, dealing no damage"
+            };
+            printOnce(atkResult);
         }
 
     } else if (atkData.id1 == "player2") {
         //  Player 2 is attacking Player 1
         if (player2.ammo == 0) {
-            var atkResult = {content: "Player 2 attempted to attack, but doesn't have enough ammo.  Perhaps now is a good time to Repair & Restock?"};
-            if (atkData.id1 == clientID) {
-                socket.emit('dispMsg', atkResult);
-            }
+            var atkResult = {
+                id: atkData.id1,
+                content: "Player 2 attempted to attack, but doesn't have enough ammo.  Perhaps now is a good time to Repair & Restock?"
+            };
+            printOnce(atkResult);
             return;
         }
 
@@ -146,21 +180,27 @@ socket.on('attack', function(atkData) {
             player1.hp -= dmgRoll;
 
             //  send to server
-            if (atkData.id1 == clientID) {
-                //  So that only one client sends the message
-                var atkResult = {content: "Player 2 attacked and successfully hit Player 1, dealing " + dmgRoll + " damage!"};
-                socket.emit('dispMsg', atkResult);
-            }
+            var atkResult = {
+                id: atkData.id1,
+                content: "Player 2 attacked and successfully hit Player 1, dealing " + dmgRoll + " damage!"
+            };
+            printOnce(atkResult);
 
             //  check if player1 is dead
-            isDead("player1");
+            if (isDead("player1").confirmed == true) {
+                var deadResult = {
+                    id: atkData.id1,
+                    content: "Player 2's ship has been completely destroyed!  GAME OVER"
+                };
+                printOnce(deadResult);
+            };
         } else {
             //  send to server
-            if (atkData.id1 == clientID) {
-                //  So that only one client sends the message
-                var atkResult = {content: "Player 2 attacked Player 1 and missed, dealing no damage"};
-                socket.emit('dispMsg', atkResult);
-            }
+            var atkResult = {
+                id: atkData.id1,
+                content: "Player 2 attacked Player 1 and missed, dealing no damage"
+            };
+            printOnce(atkResult);
         }
     }
 });
@@ -187,11 +227,11 @@ socket.on('repres', function(resData) {
             player1.hp += repRoll;
         }
 
-        if (resData.id == clientID) {
-            //  So that only one client prints
-            var represResult = {content: "Player 1 repaired and restocked their ship, gaining " + repVal + " hit points"};
-            socket.emit('dispMsg', represResult);
-        }
+        var represResult = {
+            id: resData.id,
+            content: "Player 1 repaired and restocked their ship, gaining " + repVal + " hit points"
+        };
+        printOnce(represResult);
 
     } else if (resData.id == "player2") {
         //  Player 2 is taking the repres action
@@ -210,11 +250,11 @@ socket.on('repres', function(resData) {
             player2.hp += repRoll;
         }
 
-        if (resData.id == clientID) {
-            //  So that only one client prints
-            var represResult = {content: "Player 2 repaired and restocked their ship, gaining " + repVal + " hit points"};
-            socket.emit('dispMsg', represResult);
-        }
+        var represResult = {
+            id: resData.id,
+            content: "Player 2 repaired and restocked their ship, gaining " + repVal + " hit points"
+        };
+        printOnce(represResult);
 
     }
 });
@@ -227,11 +267,12 @@ socket.on('reposition', function(repoData) {
         player1.man += 2;
         player1.repo = 1;
 
-        if (repoData.id == clientID) {
-            //  So that only one client prints
-            var repoResult = {content: "Player 1 repositioned their ship, gaining a bonus to accuracy and maneuverability for the next turn"};
-            socket.emit('dispMsg', repoResult);
-        }
+        var repoResult = {
+            id: repoData.id,
+            content: "Player 1 repositioned their ship, gaining a bonus to accuracy and maneuverability for the next turn"
+        };
+        printOnce(repoResult);
+
     } else if (repoData.id == "player2") {
         //  Player 2 is taking the reposition action
 
@@ -239,11 +280,11 @@ socket.on('reposition', function(repoData) {
         player2.man += 2;
         player2.repo = 1;
 
-        if (repoData.id == clientID) {
-            //  So that only one client prints
-            var repoResult = {content: "Player 2 repositioned their ship, gaining a bonus to accuracy and maneuverability for the next turn"};
-            socket.emit('dispMsg', repoResult);
-        }
+        var repoResult = {
+            id: repoData.id,
+            content: "Player 2 repositioned their ship, gaining a bonus to accuracy and maneuverability for the next turn"
+        };
+        printOnce(repoResult);
     }
 });
 
@@ -257,16 +298,18 @@ socket.on('plunder', function(plunData) {
 
         if (plunRoll >= (10 + player2.fer)) {
             //  PLAYER 1 WINS
-            if (plunData.id1 == clientID) {
-                var plunResult = {content: "PLAYER 1 WINS THE GAME!!!  They successfully plundered Player 2!"};
-                socket.emit('dispMsg', plunResult);
-            }
+            var plunResult = {
+                id: plunData.id1,
+                content: "PLAYER 1 WINS THE GAME!!!  They successfully plundered Player 2!"
+            };
+            printOnce(plunResult);
         } else {
             //  Player 1 failed to plunder
-            if (plunData.id1 == clientID) {
-                var plunResult = {content: "Player 1 attempted to plunder Player 2, but failed to succeed!"};
-                socket.emit('dispMsg', plunResult);
-            }
+            var plunResult = {
+                id: plunData.id1,
+                content: "Player 1 attempted to plunder Player 2, but failed to succeed!"
+            };
+            printOnce(plunResult);
         }
     } else if (plunData.id1 == "player2") {
         //  Player 2 is attempting to plunder Player 1
@@ -274,22 +317,25 @@ socket.on('plunder', function(plunData) {
 
         if (plunRoll >= (10 + player1.fer)) {
             //  PLAYER 2 WINS
-            if (plunData.id1 == clientID) {
-                var plunResult = {content: "PLAYER 2 WINS THE GAME!!!  They successfully plundered Player 1!"};
-                socket.emit('dispMsg', plunResult);
-            }
+            var plunResult = {
+                id: plunData.id1,
+                content: "PLAYER 2 WINS THE GAME!!!  They successfully plundered Player 1!"
+            };
+            printOnce(plunResult);
         } else {
             //  Player 2 failed to plunder
-            if (plunData.id1 == clientID) {
-                var plunResult = {content: "Player 2 attempted to plunder Player 1, but failed to succeed!"};
-                socket.emit('dispMsg', plunResult);
-            }
+            var plunResult = {
+                id: plunData.id1,
+                content: "Player 2 attempted to plunder Player 1, but failed to succeed!"
+            };
+            printOnce(plunResult);
         }
     }
 
 });
 
 socket.on('special', function(specData) {
+    console.log("> " + specData.id1 + "has taken the special action");
     if (specData.id1 == "player1") {
         //  Player 1 is using the special
 
@@ -298,27 +344,40 @@ socket.on('special', function(specData) {
             var resto = (player1.maxHp - player1.hp) * 0.75;
             player1.hp += resto;
 
-            if (specData.id1 == clientID) {
-                var specResult = {content: "Player 1 activated their special RESTORATION ability, repairing " + resto + " hit points"};
-                socket.emit('dispMsg', specResult);
-            }
+            var specResult = {
+                id: specData.id1,
+                content: "Player 1 activated their special RESTORATION ability, repairing " + resto + " hit points"
+            };
+            printOnce(specResult);
+
         } else if (player1.name == "Hartley") {
             //  activate the hartley special
             var atkRoll = dice(20) + player1.acc;
+
             if (atkRoll >= player2.man) {
                 var dmgRoll = dice(8) + player1.pow + 4;
                 player2.hp -= dmgRoll;
-                if (specData.id1 == clientID) {
-                    var atkResult = {content: "Player 1 activated their special IMPERIAL DISCIPLINE power, dealing " + dmgRoll + " damage to Player 2 and restocking all ammunition"};
-                    socket.emit('dispMsg', atkResult);
-                }
+
+                var atkResult = {
+                    id: specData.id1,
+                    content: "Player 1 activated their special IMPERIAL DISCIPLINE power, dealing " + dmgRoll + " damage to Player 2 and restocking all ammunition"
+                };
+                printOnce(atkResult);
+
                 //  Check to see if player2 is dead
-                isDead("player2");
+                if (isDead("player2").confirmed == true) {
+                    var deadResult = {
+                        id: atkData.id1,
+                        content: "Player 1's ship has been completely destroyed!  GAME OVER"
+                    };
+                    printOnce(deadResult);
+                };
             } else {
-                if (specData.id1 == clientID) {
-                    var atkResult = {content: "Player 1 activated their special IMPERIAL DISCIPLINE power, restoring all ammunition but missing their attack."};
-                    socket.emit('dispMsg', atkResult);
-                }
+                var atkResult = {
+                    id: specData.id1,
+                    content: "Player 1 activated their special IMPERIAL DISCIPLINE power, restoring all ammunition but missing their attack."
+                };
+                printOnce(specResult);
             }
             player1.ammo = 3;
 
@@ -328,10 +387,12 @@ socket.on('special', function(specData) {
             var ferBoost = (player2.hp / 4) + 5;
             player1.fer += ferBoost;
 
-            if (specData.id1 == clientID) {
-                var surgeResult = {content: "Player 1 activated their special HOOKSURGE ability, gaining a massive increase to their chance to plunder Player 2!"};
-                socket.emit('dispMsg', surgeResult);
-            }
+            var surgeResult = {
+                id: specData.id1,
+                content: "Player 1 activated their special HOOKSURGE ability, gaining a massive increase to their chance to plunder Player 2!"
+            };
+            printOnce(surgeResult);
+
         } else if (player1.name == "Veronica") {
             //  activate the veronica special
 
@@ -339,13 +400,20 @@ socket.on('special', function(specData) {
             var dmgRoll = dice(8) + 8
             player2.hp -= dmgRoll;
 
-            if (specData.id1 == clientID) {
-                var hellResult = {content: "Player 1 activated their special HELLFIRE BARRAGE ability, dealing a whopping " + dmgRoll + " damage to Player 2"};
-                socket.emit('dispMsg', hellResult);
-            }
+            var hellResult = {
+                id: specData.id1,
+                content: "Player 1 activated their special HELLFIRE BARRAGE ability, dealing a whopping " + dmgRoll + " damage to Player 2"
+            };
+            printOnce(hellResult);
 
             //  Check to see if player2 is dead
-            isDead("player2");
+            if (isDead("player2").confirmed == true) {
+                var deadResult = {
+                    id: specData.id1,
+                    content: "Player 1's ship has been completely destroyed!  GAME OVER"
+                };
+                printOnce(deadResult);
+            };
         }
     } else if (specData.id1 == "player2") {
         //  Player 2 is using the special
@@ -355,40 +423,55 @@ socket.on('special', function(specData) {
             var resto = (player2.maxHp - player2.hp) * 0.75;
             player2.hp += resto;
 
-            if (specData.id1 == clientID) {
-                var specResult = {content: "Player 2 activated their special RESTORATION ability, repairing " + resto + "hit points"};
-                socket.emit('dispMsg', specResult);
-            }
+            var specResult = {
+                id: specData.id1,
+                content: "Player 2 activated their special RESTORATION ability, repairing " + resto + " hit points"
+            };
+            printOnce(specResult);
+
         } else if (player2.name == "Hartley") {
             //  activate the hartley special
             var atkRoll = dice(20) + player2.acc;
+
             if (atkRoll >= player1.man) {
                 var dmgRoll = dice(8) + player2.pow + 4;
                 player1.hp -= dmgRoll;
-                if (specData.id1 == clientID) {
-                    var atkResult = {content: "Player 2 activated their special IMPERIAL DISCIPLINE power, dealing " + dmgRoll + " to Player 1 and restocking all ammunition"};
-                    socket.emit('dispMsg', atkResult);
-                }
+
+                var atkResult = {
+                    id: specData.id1,
+                    content: "Player 2 activated their special IMPERIAL DISCIPLINE power, dealing " + dmgRoll + " damage to Player 1 and restocking all ammunition"
+                };
+                printOnce(atkResult);
 
                 //  Check to see if player1 is dead
-                isDead("player1");
+                if (isDead("player1").confirmed == true) {
+                    var deadResult = {
+                        id: specData.id1,
+                        content: "Player 2's ship has been completely destroyed!  GAME OVER"
+                    };
+                    printOnce(deadResult);
+                };
+            } else {
+                var atkResult = {
+                    id: specData.id1,
+                    content: "Player 2 activated their special IMPERIAL DISCIPLINE power, restoring all ammunition but missing their attack."
+                };
+                printOnce(specResult);
             }
             player2.ammo = 3;
 
-            if (specData.id1 == clientID) {
-                var atkResult = {content: "Player 2 activated their special IMPERIAL DISCIPLINE power, restoring all ammunition but missing their attack."};
-                socket.emit('dispMsg', atkResult);
-            }
         } else if (player2.name == "Bernkastel") {
             //  activate the bernkastel special
 
             var ferBoost = (player1.hp / 4) + 5;
             player2.fer += ferBoost;
 
-            if (specData.id1 == clientID) {
-                var surgeResult = {content: "Player 2 activated their special HOOKSURGE ability, gaining a massive increase to their chance to plunder Player 1!"};
-                socket.emit('dispMsg', surgeResult);
-            }
+            var surgeResult = {
+                id: specData.id1,
+                content: "Player 2 activated their special HOOKSURGE ability, gaining a massive increase to their chance to plunder Player 1!"
+            };
+            printOnce(surgeResult);
+
         } else if (player2.name == "Veronica") {
             //  activate the veronica special
 
@@ -396,13 +479,20 @@ socket.on('special', function(specData) {
             var dmgRoll = dice(8) + 8
             player1.hp -= dmgRoll;
 
-            if (specData.id1 == clientID) {
-                var hellResult = {content: "Player 2 activated their special HELLFIRE BARRAGE ability, dealing a whopping " + dmgRoll + " damage to Player 1"};
-                socket.emit('dispMsg', hellResult);
-            }
+            var hellResult = {
+                id: specData.id1,
+                content: "Player 2 activated their special HELLFIRE BARRAGE ability, dealing a whopping " + dmgRoll + " damage to Player 1"
+            };
+            printOnce(hellResult);
 
-            //  Check to see if Player1 is dead
-            isDead("player1");
+            //  Check to see if player1 is dead
+            if (isDead("player1").confirmed == true) {
+                var deadResult = {
+                    id: specData.id1,
+                    content: "Player 2's ship has been completely destroyed!  GAME OVER"
+                };
+                printOnce(deadResult);
+            };
         }
     }
 });

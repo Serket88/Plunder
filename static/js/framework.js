@@ -44,7 +44,7 @@ $('#anj_button').click(function() {
         fer: 3
     };
     socket.emit('shipSelect', anjData);
-    console.log("Anjelita selection sent to server");
+    console.log(">  " + clientID + " has selected The Anjelita");
 });
 
 $('#har_button').click(function() {
@@ -58,7 +58,7 @@ $('#har_button').click(function() {
         fer: 2
     };
     socket.emit('shipSelect', harData);
-    console.log("Hartley selection sent to server");
+    console.log(">  " + clientID + " has selected The Hartley");
 });
 
 $('#ber_button').click(function() {
@@ -72,7 +72,7 @@ $('#ber_button').click(function() {
         fer: 6
     };
     socket.emit('shipSelect', berData);
-    console.log("Bernkastel selection sent to server");
+    console.log(">  " + clientID + " has selected The Bernkastel");
 });
 
 $('#ver_button').click(function() {
@@ -86,7 +86,7 @@ $('#ver_button').click(function() {
         fer: 3
     };
     socket.emit('shipSelect', verData);
-    console.log("Veronica selection sent to server");
+    console.log(">  " + clientID + " has selected La Veronica");
 });
 
 //  When an action is clicked, call the appropriate function
