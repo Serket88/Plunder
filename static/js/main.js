@@ -114,6 +114,14 @@ socket.on('shipSelect', function(data) {
     }
 });
 
+socket.on('turnFlip', function(data) {
+    if (data.actor != clientID) {
+        //  If the person who just took a turn is not this
+        //  client, then un-disable the buttons
+        enableActions();
+    }
+});
+
 socket.on('attack', function(atkData) {
     console.log("> " + atkData.id1 + "has attacked");
     if (atkData.id1 == "player1") {
@@ -209,6 +217,7 @@ socket.on('attack', function(atkData) {
             printOnce(atkResult);
         }
     }
+    disableActions();
 });
 
 socket.on('repres', function(resData) {
@@ -263,6 +272,7 @@ socket.on('repres', function(resData) {
         printOnce(represResult);
 
     }
+    disableActions();
 });
 
 socket.on('reposition', function(repoData) {
@@ -292,6 +302,7 @@ socket.on('reposition', function(repoData) {
         };
         printOnce(repoResult);
     }
+    disableActions();
 });
 
 socket.on('plunder', function(plunData) {
@@ -337,7 +348,7 @@ socket.on('plunder', function(plunData) {
             printOnce(plunResult);
         }
     }
-
+    disableActions();
 });
 
 socket.on('special', function(specData) {
@@ -501,4 +512,5 @@ socket.on('special', function(specData) {
             };
         }
     }
+    disableActions();
 });

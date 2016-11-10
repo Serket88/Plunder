@@ -17,6 +17,8 @@ var io = require('socket.io')(server);
 
 app.use('/', express.static('static'));
 
+//  ================  HELPER FUNCTIONS  ================
+
 // Tells socket.io to listen to a built-in event 'connection'. This event is
 // triggered when a client connects to the server. At that time, the callback
 // function (the 2nd argument) will be called with an object (named as 'conn')
@@ -56,16 +58,30 @@ io.sockets.on('connection', function (conn) {
     });
     
     conn.on('action', function(actData) {
+        var flipData = {
+            actor: "placeholder"
+        };
+
         if (actData.action == "attack") {
+            flipData.actor = actData.id1;
             io.emit('attack', actData);
+            io.emit('turnFlip', flipData);
         } else if (actData.action == "repres") {
+            flipData.actor = actData.id;
             io.emit('repres', actData);
+            io.emit('turnFlip', flipData);
         } else if (actData.action == "reposition") {
+            flipData.actor = actData.id;
             io.emit('reposition', actData);
+            io.emit('turnFlip', flipData);
         } else if (actData.action == "plunder") {
+            flipData.actor = actData.id1;
             io.emit('plunder', actData);
+            io.emit('turnFlip', flipData);
         } else if (actData.action == "special") {
+            flipData.actor = actData.id1;
             io.emit('special', actData);
+            io.emit('turnFlip', flipData);
         } else {
             console.log("Action failure")
         }

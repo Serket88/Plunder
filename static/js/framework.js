@@ -33,6 +33,22 @@ function disableShips() {
     $("#ver_button").prop('disabled', true);
 }
 
+function disableActions() {
+    $("#atk_button").prop('disabled', true);
+    $("#repres_button").prop('disabled', true);
+    $("#repo_button").prop('disabled', true);
+    $("#pldr_button").prop('disabled', true);
+    $("#spec_button").prop('disabled', true);
+}
+
+function enableActions() {
+    $("#atk_button").prop('disabled', false);
+    $("#repres_button").prop('disabled', false);
+    $("#repo_button").prop('disabled', false);
+    $("#pldr_button").prop('disabled', false);
+    $("#spec_button").prop('disabled', false);
+}
+
 //  ================  BUTTON CLICK HANDLERS  ================
 
 //  When a button is pressed, take the appropriate data and send it to the server's shipSelect function.
