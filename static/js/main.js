@@ -7,6 +7,9 @@
 var clientID;
 var initialized = false;
 
+var specialActive = false;
+var specialUsed = false;
+
 var player1 = new Ship();
 var player2 = new Ship();
 
@@ -96,6 +99,7 @@ socket.on('loadPlayer', function(msg) {
         initialized = true;
         console.log(">  Initialized with the ID " + clientID);
     }
+    disableActions();
 });
 
 socket.on('shipSelect', function(data) {
@@ -114,8 +118,44 @@ socket.on('shipSelect', function(data) {
     }
 });
 
+socket.on('gameStart', function(data) {
+    if (clientID == "player1") {
+        enableActions();
+    }
+});
+
 socket.on('turnFlip', function(data) {
-    if (data.actor != clientID) {
+    if (data.actor == clientID) {
+        //  Increase special charge
+        if (clientID == "player1") {
+            if (data.action == "attack") {
+                player1.charge += player1.atkCharge;
+            } else if (data.action == "repres") {
+                player1.charge += player1.represCharge;
+            } else if (data.action == "reposition") {
+                player1.charge += player1.repoCharge;
+            }
+        } else if (clientID == "player2") {
+            if (data.action == "attack") {
+                player2.charge += player2.atkCharge;
+            } else if (data.action == "repres") {
+                player2.charge += player2.represCharge;
+            } else if (data.action == "reposition") {
+                player2.charge += player2.repoCharge;
+            }
+        }
+        //  If charge >= 100, enable special
+        if (clientID == "player1") {
+            if (player1.charge >= 100 && !specialUsed) {
+                specialActive = true;
+            }
+        } else if (clientID == "player2") {
+            if (player2.charge >= 100 && !specialUsed) {
+                specialActive = true;
+            }
+        }
+
+    } else if (data.actor != clientID) {
         //  If the person who just took a turn is not this
         //  client, then un-disable the buttons
         enableActions();
@@ -512,5 +552,7 @@ socket.on('special', function(specData) {
             };
         }
     }
+    specialActive = false;
+    specialUsed = true;
     disableActions();
 });

@@ -46,7 +46,10 @@ function enableActions() {
     $("#repres_button").prop('disabled', false);
     $("#repo_button").prop('disabled', false);
     $("#pldr_button").prop('disabled', false);
-    $("#spec_button").prop('disabled', false);
+    if (specialActive == true) {
+        $("#spec_button").prop('disabled', false);
+    }
+
 }
 
 //  ================  BUTTON CLICK HANDLERS  ================
@@ -64,6 +67,9 @@ $('#anj_button').click(function() {
         pow: 2,
         man: 13,
         fer: 3,
+        atkCharge: 15,
+        represCharge: 35,
+        repoCharge: 20,
         buttonName: "#anj_button"
     };
     socket.emit('shipSelect', anjData);
@@ -79,6 +85,9 @@ $('#har_button').click(function() {
         pow: 3,
         man: 15,
         fer: 2,
+        atkCharge: 35,
+        represCharge: 20,
+        repoCharge: 15,
         buttonName: "#har_button"
     };
     socket.emit('shipSelect', harData);
@@ -94,6 +103,9 @@ $('#ber_button').click(function() {
         pow: 5,
         man: 13,
         fer: 6,
+        atkCharge: 15,
+        represCharge: 20,
+        repoCharge: 35,
         buttonName: "#ber_button"
     };
     socket.emit('shipSelect', berData);
@@ -109,6 +121,9 @@ $('#ver_button').click(function() {
         pow: 6,
         man: 11,
         fer: 3,
+        atkCharge: 35,
+        represCharge: 15,
+        repoCharge: 20,
         buttonName: "#ver_button"
     };
     socket.emit('shipSelect', verData);

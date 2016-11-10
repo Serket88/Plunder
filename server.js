@@ -8,6 +8,8 @@ var server = require('http').createServer(app);
 
 //  Variable for player handling:
 var playerNum = 1;
+var select1 = false;
+var select2 = false;
 
 // Add WebSocket support to the web server, using socket.io.
 
@@ -53,13 +55,24 @@ io.sockets.on('connection', function (conn) {
         if (msg && msg.name && msg.id) {
             io.emit('shipSelect', msg);
             io.emit("dispMsg", {content: msg.id + " has selected The " + msg.name});
+
+            if (msg.id == "player1") {
+                select1 = true;
+            } else if (msg.id == "player2") {
+                select2 = true;
+            }
+
+            if (select1 && select2) {
+                io.emit('gameStart', msg);
+            }
             console.log("Select received and re-sent");
         }
     });
     
     conn.on('action', function(actData) {
         var flipData = {
-            actor: "placeholder"
+            actor: "placeholder",
+            action: actData.action
         };
 
         if (actData.action == "attack") {

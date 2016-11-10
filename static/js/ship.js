@@ -15,9 +15,14 @@ function Ship()
     this.man = 0;
     this.fer = 0;
 
+    this.atkCharge = 0;
+    this.represCharge = 0;
+    this.repoCharge = 0;
+
     this.maxHp = 0;
     this.ammo = 3;
     this.repo = 0;
+    this.charge = 0;
 };
 
 Ship.prototype.select = function(stats) {
@@ -30,4 +35,8 @@ Ship.prototype.select = function(stats) {
     this.pow = stats.pow;
     this.man = stats.man;
     this.fer = stats.fer;
+
+    this.atkCharge = stats.atkCharge;
+    this.represCharge = stats.represCharge;
+    this.repoCharge = stats.repoCharge;
 };
