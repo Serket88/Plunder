@@ -7,8 +7,7 @@
         - Create a function that disables all ship buttons
         - Create a function that disables/enables the special button
         - Create a function that disables/enables all action buttons
-        - add reenable functionality to repoflip
-        - add a turnChecker to see if the special should be enabled
+
         - add a function to add special charge based on the ship and action
         - add special charging functionality
 */
@@ -27,7 +26,14 @@ function getOtherId(localId) {
     }
 }
 
-//  ================  BUTTON HANDLERS  ================
+function disableShips() {
+    $("#anj_button").prop('disabled', true);
+    $("#har_button").prop('disabled', true);
+    $("#ber_button").prop('disabled', true);
+    $("#ver_button").prop('disabled', true);
+}
+
+//  ================  BUTTON CLICK HANDLERS  ================
 
 //  When a button is pressed, take the appropriate data and send it to the server's shipSelect function.
 
@@ -41,7 +47,8 @@ $('#anj_button').click(function() {
         hp: 45,
         pow: 2,
         man: 13,
-        fer: 3
+        fer: 3,
+        buttonName: "#anj_button"
     };
     socket.emit('shipSelect', anjData);
     console.log(">  " + clientID + " has selected The Anjelita");
@@ -55,7 +62,8 @@ $('#har_button').click(function() {
         hp: 30,
         pow: 3,
         man: 15,
-        fer: 2
+        fer: 2,
+        buttonName: "#har_button"
     };
     socket.emit('shipSelect', harData);
     console.log(">  " + clientID + " has selected The Hartley");
@@ -69,7 +77,8 @@ $('#ber_button').click(function() {
         hp: 30,
         pow: 5,
         man: 13,
-        fer: 6
+        fer: 6,
+        buttonName: "#ber_button"
     };
     socket.emit('shipSelect', berData);
     console.log(">  " + clientID + " has selected The Bernkastel");
@@ -83,7 +92,8 @@ $('#ver_button').click(function() {
         hp: 30,
         pow: 6,
         man: 11,
-        fer: 3
+        fer: 3,
+        buttonName: "#ver_button"
     };
     socket.emit('shipSelect', verData);
     console.log(">  " + clientID + " has selected La Veronica");

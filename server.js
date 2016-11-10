@@ -90,7 +90,7 @@ numPlayers = 0;
 
 // Listen on a high port.
 
-var port = 12848;
+var port = 12888;
 server.listen(port, function () {
     console.log("Listening on port " + port);
 });

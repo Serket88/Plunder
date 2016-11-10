@@ -99,6 +99,12 @@ socket.on('loadPlayer', function(msg) {
 });
 
 socket.on('shipSelect', function(data) {
+    if (data.id != clientID) {
+        $(data.buttonName).prop('disabled', true);
+    } else {
+        disableShips();
+    }
+
     if (data.id == "player1") {
         player1.select(data);
     } else if (data.id == "player2") {
