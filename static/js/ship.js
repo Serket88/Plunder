@@ -8,6 +8,7 @@ function Ship()
 {
 	this.name = "undefined";
 	this.playerID = null;
+    this.status = "Normal";
 
 	this.acc = 0;
     this.hp = 0;

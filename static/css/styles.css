@@ -1,4 +1,8 @@
 body {
+    background-image: url("../img/title.jpg");
+    background-repeat: no-repeat;
+    background-position: 0rem 2.5rem;
+    background-attachment: fixed;
     margin: 0;
     padding: 0;
     font-size: 14pt;
@@ -32,7 +36,7 @@ body {
 /*  =============  CONTENT FORMATTING  ============  */
 
 .content {
-    position: fixed;
+    position: absolute;
     top:  2.7rem;
     width: 100%;
     bottom:  0;
@@ -46,55 +50,180 @@ body {
     margin-top: -15px;
 }
 
-/*  =============  INPUT FORMATTING  ============  */
+/*  =============  SHIP BUTTONS ============  */
 
-input[type=button] {
-    padding: 5px;
+input.shipButton {
+    position: absolute;
     margin: 2px;
-    width: 120px;
+    width: 107px;
+    height: 240px;
+    top: 293px;
 }
 
-#input {
-    float: left;
-    width: 50%;
-    height: 100%;
+#anj_button {
+    left: 43px;
 }
 
-#ship_commands {
-    vertical-align: top;
-    float: left;
-    margin-left: 50px;
-    width: 25%;
-    height: 100%;
+#har_button {
+    left: 155px;
 }
 
-#core_commands {
-    vertical-align: top;
-    margin-left: 35%;
+#ber_button {
+    left: 279px;
+}
+
+#ver_button {
+    left: 395px;
+}
+
+/*  =============  ACTION BUTTONS  ============  */
+
+input.actButton {
+    position: absolute;
+    margin: 2px;
+    width: 154px;
+    height: 40px;
+    left: 25px;
+}
+
+#atk_button {
+    top: 180px;
+}
+
+#repres_button {
+    top: 230px;
+}
+
+#repo_button {
+    top: 280px;
+}
+
+#pldr_button {
+    top: 330px;
+}
+
+#spec_button {
+    top: 380px;
+}
+
+/*  =============  HOVER STYLING  ============  */
+
+div.actHover {
+    position: absolute;
+    z-index: 1000;
+    margin: 2px;
+    /*width: 154px;*/
+    width: 200px;
+    height: 40px;
+    left: 25px;
+}
+
+#atkHover {
+    top: 180px;
+}
+
+#represHover {
+    top: 230px;
+}
+
+#repoHover {
+    top: 280px;
+}
+
+#pldrHover {
+    top: 330px;
+}
+
+#specHover {
+    top: 380px;
 }
 
 /*  =============  OUTPUT FORMATTING  ============  */
 
-#output {
-    float: right;
-    width: 50%;
+#display {
+    position: absolute;
+    right: 80px;
     height: 100%;
     margin-top: -15px;
-}
-
-#display {
     resize: none;
     overflow-y: scroll;
-    width: 90%;
+    width: 40%;
     height: 70%;
     vertical-align: top;
 }
 
-#status {
+#moveDesc {
+    position: absolute;
     resize: none;
-    width: 90%;
-    margin-top: 20px;
-    vertical-align: bottom;
+    top: 139px;
+    left: 186px;
+    width: 147.5px;
+    height: 308px;
+
+}
+
+textarea.oppBar {
+    position: absolute;
+    top: -2.5px;
+    resize: none;
     text-align: center;
+    font-size: 18pt;
+}
+
+#oppName {
+    left: 800px;
+    width: 200px;
+}
+
+#oppHP {
+    left: 110px;
+    width: 100px;
+}
+
+#oppStatus {
+    left: 310px;
+    width: 200px;
+}
+
+textarea.ownBar {
+    position: absolute;
+    bottom: 80px;
+    resize: none;
+    text-align: center;
+    font-size: 18pt;
+}
+
+#ownName {
+    left: 800px;
+    width: 200px;
+}
+
+#ownHP {
+    left: 80px;
+    width: 100px;
+}
+
+#ownStatus {
+    left: 270px;
+    width: 200px;
+}
+
+#ownSpecial {
+    left: 510px;
+    width: 100px;
+}
+
+#ownAmmo {
+    left: 650px;
+    width: 100px;
+}
+
+#altFeedback {
+    position: absolute;
+    resize: none;
+    text-align: center;
+    left: 510px;
+    top: 250px;
+    width: 200px;
     font-size: 24pt;
 }

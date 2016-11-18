@@ -35,6 +35,8 @@ io.sockets.on('connection', function (conn) {
     playerNum++;
     console.log("> " + playerData.id + " connected");
     
+    //io.emit('contextSwitch', playerData);
+
     io.emit('loadPlayer', playerData);
     var loadMsg = {
         content: "Player " + playerData.idNum.toString() + " has entered the game"
@@ -64,44 +66,19 @@ io.sockets.on('connection', function (conn) {
 
             if (select1 && select2) {
                 io.emit('gameStart', msg);
+                io.emit('contextSwitch', msg);
             }
             console.log("Select received and re-sent");
         }
     });
     
     conn.on('action', function(actData) {
-        var flipData = {
-            actor: "placeholder",
-            action: actData.action
-        };
-
-        if (actData.action == "attack") {
-            flipData.actor = actData.id1;
-            io.emit('attack', actData);
-            io.emit('turnFlip', flipData);
-        } else if (actData.action == "repres") {
-            flipData.actor = actData.id;
-            io.emit('repres', actData);
-            io.emit('turnFlip', flipData);
-        } else if (actData.action == "reposition") {
-            flipData.actor = actData.id;
-            io.emit('reposition', actData);
-            io.emit('turnFlip', flipData);
-        } else if (actData.action == "plunder") {
-            flipData.actor = actData.id1;
-            io.emit('plunder', actData);
-            io.emit('turnFlip', flipData);
-        } else if (actData.action == "special") {
-            flipData.actor = actData.id1;
-            io.emit('special', actData);
-            io.emit('turnFlip', flipData);
-        } else {
-            console.log("Action failure")
-        }
-        console.log(actData.action + " received and re-sent");
+        io.emit('action', actData);
     });
 
     conn.on('disconnect', function(data) {
+        select1 = false;
+        select2 = false;
         if (playerNum == 2 && playerData.idNum == 1) {
             playerNum = 1;
         } else if (playerNum == 3 && playerData.idNum == 1) {
@@ -114,12 +91,16 @@ io.sockets.on('connection', function (conn) {
         console.log("> " + playerData.id + " disconnected");
     });
     
+    conn.on('gameOver', function(data) {
+        io.emit('gameOver', data);
+    });
+
 });
 numPlayers = 0;
 
 // Listen on a high port.
 
-var port = 12888;
+var port = 12813;
 server.listen(port, function () {
     console.log("Listening on port " + port);
 });

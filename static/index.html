@@ -21,12 +21,12 @@
 <body>
     
     <div class="header">
-        <div class="title">PLUNDER v0.0.1</div>
+        <div class="title">PLUNDER v0.10.0</div>
     </div>
     
     <div class="content">
         
-        <div id="intro">
+        <div id="intro" hidden>
                 <p>
                     This is a functional prototype for Plunder.  Use the buttons below to play the game.
                 </p>
@@ -35,27 +35,47 @@
         <div id="input">
             
             <div id="ship_commands">
-                <p>Ship Selection:</p>
-                <input id="anj_button" type=button value="Anjelita"/> <br>
-                <input id="har_button" type="button" value="Hartley"/> <br>
-                <input id="ber_button" type="button" value="Bernkastel"/> <br>
-                <input id="ver_button" type="button" value="Veronica"/> <br>
+                <input id="anj_button" class="shipButton" type=button value="Anjelita"/>
+                <input id="har_button" class="shipButton" type="button" value="Hartley"/>
+                <input id="ber_button" class="shipButton" type="button" value="Bernkastel"/>
+                <input id="ver_button" class="shipButton" type="button" value="Veronica"/>
             </div>
 
             <div id="core_commands">
-                <p>Command Selection:</p>
-                <input id="atk_button" type="button" value="Attack"/> <br>
-                <input id="repres_button" type="button" value="Repair & Restock"/> <br>
-                <input id="repo_button" type="button" value="Reposition"/> <br>
-                <input id="pldr_button" type="button" value="Plunder!"/> <br>
-                <input id="spec_button" type="button" value="Special"/> <br>
+                <div id="atkHover" class="actHover" hidden></div>
+                <input id="atk_button" class="actButton" type="button" value="Attack" hidden/> <br>
+
+                <div id="represHover" class="actHover" hidden></div>
+                <input id="repres_button" class="actButton" type="button" value="Repair & Restock" hidden/> <br>
+
+                <div id="repoHover" class="actHover" hidden></div>
+                <input id="repo_button" class="actButton" type="button" value="Reposition" hidden/> <br>
+
+                <div id="pldrHover" class="actHover" hidden></div>
+                <input id="pldr_button" class="actButton" type="button" value="Plunder!" hidden/> <br>
+
+                <div id="specHover" class="actHover" hidden></div>
+                <input id="spec_button" class="actButton" type="button" value="Special" hidden/> <br>
             </div>
             
         </div>
         
         <div id="output">
-            <textarea id="display" wrap=on readonly></textarea>
-            <textarea id="status" rows=1 readonly>HP:          Status:        </textarea>
+            <!--<textarea id="display" wrap=on readonly hidden></textarea>-->
+
+            <textarea id="moveDesc" wrap="on" readonly hidden>Attack the enemy ship and plunder them for riches beyond your wildest dreams!\n\nThe lower your opponent's health, the better your chances will be for successfully plundering them.  Beware!  If you destroy your enemy completely, you will both lose the game.</textarea>
+
+            <textarea id="oppName" class="oppBar" rows="1" wrap="on" readonly hidden></textarea>
+            <textarea id="oppHP" class="oppBar" rows="1" wrap="on" readonly hidden></textarea>
+            <textarea id="oppStatus" class="oppBar" rows="1" wrap="on" readonly hidden></textarea>
+
+            <textarea id="ownName" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
+            <textarea id="ownHP" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
+            <textarea id="ownStatus" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
+            <textarea id="ownSpecial" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
+            <textarea id="ownAmmo" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
+
+            <textarea id="altFeedback" rows="3" wrap="on" readonly hidden></textarea>
         </div>
         
     </div>
