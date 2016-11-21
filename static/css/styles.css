@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    background-image: url("../img/anjelita_title.jpg");
+    background-image: url("../img/default_title.jpg");
     background-repeat: no-repeat;
     background-position: 0rem 2.5rem;
     background-attachment: fixed;
@@ -209,7 +209,7 @@ textarea.oppBar {
 
 textarea.ownBar {
     position: absolute;
-    bottom: 8px;
+    bottom: 54px;
     resize: none;
     text-align: left;
     font-family: "Rockwell";

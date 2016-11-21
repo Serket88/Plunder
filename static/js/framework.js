@@ -681,25 +681,25 @@ $('#spec_button').click(function() {
 $('#anj_button').hover(function() {
     document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
 }, function() {
-    document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
+    document.body.style.backgroundImage = "url(../img/default_title.jpg)";
 });
 
 $('#har_button').hover(function() {
     document.body.style.backgroundImage = "url(../img/hartley_title.jpg)";
 }, function() {
-    document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
+    document.body.style.backgroundImage = "url(../img/default_title.jpg)";
 });
 
 $('#ber_button').hover(function() {
     document.body.style.backgroundImage = "url(../img/bernkastel_title.jpg)";
 }, function() {
-    document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
+    document.body.style.backgroundImage = "url(../img/default_title.jpg)";
 });
 
 $('#ver_button').hover(function() {
     document.body.style.backgroundImage = "url(../img/veronica_title.jpg)";
 }, function() {
-    document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
+    document.body.style.backgroundImage = "url(../img/default_title.jpg)";
 });
 
 //  Move descriptions / probabilities
