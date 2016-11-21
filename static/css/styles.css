@@ -70,6 +70,13 @@ input.shipButton {
     width: 104px;
     height: 229px;
     top: 344px;
+    overflow: hidden;
+    outline: none;
+}
+
+input.shipButton:disabled {
+    opacity: 0.5;
+    background-color: gray;
 }
 
 #anj_button {
