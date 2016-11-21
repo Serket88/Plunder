@@ -216,7 +216,7 @@ textarea.oppBar {
 
 textarea.ownBar {
     position: absolute;
-    bottom: 54px;
+    top: 604px;
     resize: none;
     text-align: left;
     font-family: "Rockwell";
@@ -226,7 +226,7 @@ textarea.ownBar {
 }
 
 #ownName {
-    bottom: 8px;
+    top: 654px;
     left: 300px;
     width: 200px;
     background-color: transparent;
@@ -239,7 +239,7 @@ textarea.ownBar {
     border-color: black;
     border-width: 2px;
     width: 799px;
-    bottom: 48px;
+    top: 646px;
     margin-left: -20px;
 }
 

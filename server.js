@@ -95,7 +95,7 @@ numPlayers = 0;
 
 // Listen on a high port.
 
-var port = 12813;
+var port = 12138;
 server.listen(port, function () {
     console.log("Listening on port " + port);
 });
