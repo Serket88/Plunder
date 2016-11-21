@@ -98,21 +98,22 @@ function isDead(playerID) {
 
 function statusUpdate() {
     if (clientID == "player1") {
-        $('#ownHP').text(player1.hp + " / " + player1.maxHp);
-        $('#ownStatus').text(player1.status);
-        $('#ownSpecial').text(player1.charge + "%");
-        $('#ownAmmo').text(player1.ammo + " / 3");
+        $('#ownHP').text("Health:  " + player1.hp + " / " + player1.maxHp);
+        $('#ownStatus').text("Status:  " + player1.status);
+        $('#ownSpecial').text("Special:  " + player1.charge + "%");
+        $('#ownAmmo').text("Ammo:  " + player1.ammo + " / 3");
 
-        $('#oppHP').text(player2.hp + " / " + player2.maxHp);
-        $('#oppStatus').text(player2.status);
+        $('#oppHP').text("Health:  " + player2.hp + " / " + player2.maxHp);
+        $('#oppStatus').text("Status:  " + player2.status);
+
     } else if (clientID == "player2") {
-        $('#ownHP').text(player2.hp + " / " + player2.maxHp);
-        $('#ownStatus').text(player2.status);
-        $('#ownSpecial').text(player2.charge + "%");
-        $('#ownAmmo').text(player2.ammo + " / 3");
+        $('#ownHP').text("Health:  " + player2.hp + " / " + player2.maxHp);
+        $('#ownStatus').text("Status:  " + player2.status);
+        $('#ownSpecial').text("Special:  " + player2.charge + "%");
+        $('#ownAmmo').text("Ammo:  " + player2.ammo + " / 3");
 
-        $('#oppHP').text(player1.hp + " / " + player1.maxHp);
-        $('#oppStatus').text(player1.status);
+        $('#oppHP').text("Health:  " + player1.hp + " / " + player1.maxHp);
+        $('#oppStatus').text("Status:  " + player1.status);
     }
 }
 
@@ -143,11 +144,11 @@ socket.on('shipSelect', function(data) {
     }
 
     if (clientID == "player1") {
-        $("#ownName").text("The " + player1.name);
-        $("#oppName").text("The " + player2.name);
+        $("#ownName").text(player1.name);
+        $("#oppName").text(player2.name);
     } else if (clientID == "player2") {
-        $("#ownName").text("The " + player2.name);
-        $("#oppName").text("The " + player1.name);
+        $("#ownName").text(player2.name);
+        $("#oppName").text(player1.name);
     }
 });
 

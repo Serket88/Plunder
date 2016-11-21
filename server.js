@@ -38,10 +38,6 @@ io.sockets.on('connection', function (conn) {
     //io.emit('contextSwitch', playerData);
 
     io.emit('loadPlayer', playerData);
-    var loadMsg = {
-        content: "Player " + playerData.idNum.toString() + " has entered the game"
-    };
-    io.emit('dispMsg', loadMsg);
 
     conn.on('dispMsg', function(msg) {
         if (msg && msg.content) {
@@ -56,7 +52,6 @@ io.sockets.on('connection', function (conn) {
     conn.on('shipSelect', function(msg) {
         if (msg && msg.name && msg.id) {
             io.emit('shipSelect', msg);
-            io.emit("dispMsg", {content: msg.id + " has selected The " + msg.name});
 
             if (msg.id == "player1") {
                 select1 = true;

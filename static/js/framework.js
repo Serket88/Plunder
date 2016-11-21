@@ -3,10 +3,11 @@
 */
 
 /*  TODO
-        - Extend the width of the health displays
-        - Change public descriptions to La Veronica (with accent marks)
-        - Find a way to display the name of your ship and your opponent's ship
 
+
+        - Create a default background VERY QUICKLY
+
+        - make more feedback for ship selection
 */
 
 //  ================  GLOBAL VARIABLES  ================
@@ -100,7 +101,7 @@ function plunProb() {
 $('#anj_button').click(function() {
     var anjData = {
         id: clientID,
-        name: "Anjelita",
+        name: "The Anjelita",
         acc: 5,
         hp: 45,
         pow: 2,
@@ -118,7 +119,7 @@ $('#anj_button').click(function() {
 $('#har_button').click(function() {
     var harData = {
         id: clientID,
-        name: "Hartley",
+        name: "The Hartley",
         acc: 6,
         hp: 30,
         pow: 3,
@@ -136,7 +137,7 @@ $('#har_button').click(function() {
 $('#ber_button').click(function() {
     var berData = {
         id: clientID,
-        name: "Bernkastel",
+        name: "The Bernkastel",
         acc: 2,
         hp: 30,
         pow: 5,
@@ -154,7 +155,7 @@ $('#ber_button').click(function() {
 $('#ver_button').click(function() {
     var verData = {
         id: clientID,
-        name: "Veronica",
+        name: "La Verónica",
         acc: 5,
         hp: 30,
         pow: 6,
@@ -166,7 +167,7 @@ $('#ver_button').click(function() {
         buttonName: "#ver_button"
     };
     socket.emit('shipSelect', verData);
-    console.log(">  " + clientID + " has selected La Veronica");
+    console.log(">  " + clientID + " has selected La Verónica ");
 });
 
 //  When an action is clicked, call the appropriate function
@@ -211,7 +212,7 @@ $('#atk_button').click(function() {
             //  send to server
             var atkResult = {
                 id: clientID,
-                content: "Player 1 attacked and successfully hit Player 2, dealing " + dmgRoll + " damage!  P2: " + player2.hp
+                content: "Player 1 attacked and successfully hit Player 2, dealing " + dmgRoll + " damage!"
             };
             printOnce(atkResult);
 
@@ -266,7 +267,7 @@ $('#atk_button').click(function() {
             //  send to server
             var atkResult = {
                 id: clientID,
-                content: "Player 2 attacked and successfully hit Player 1, dealing " + dmgRoll + " damage!  P1: " + player1.hp
+                content: "Player 2 attacked and successfully hit Player 1, dealing " + dmgRoll + " damage!"
             };
             printOnce(atkResult);
 
@@ -497,7 +498,7 @@ $('#spec_button').click(function() {
         //  Player 1 is using the special
         player1.charge = 0;
 
-        if (player1.name == "Anjelita") {
+        if (player1.name == "The Anjelita") {
             //  activate anjelita special
             var resto = (player1.maxHp - player1.hp) * 0.75;
             player1.hp += resto;
@@ -508,7 +509,7 @@ $('#spec_button').click(function() {
             };
             printOnce(specResult);
 
-        } else if (player1.name == "Hartley") {
+        } else if (player1.name == "The Hartley") {
             //  activate the hartley special
             var atkRoll = dice(20) + player1.acc;
 
@@ -540,7 +541,7 @@ $('#spec_button').click(function() {
             }
             player1.ammo = 3;
 
-        } else if (player1.name == "Bernkastel") {
+        } else if (player1.name == "The Bernkastel") {
             //  activate the bernkastel special
 
             var ferBoost = (player2.hp / 4) + 5;
@@ -553,7 +554,7 @@ $('#spec_button').click(function() {
             };
             printOnce(surgeResult);
 
-        } else if (player1.name == "Veronica") {
+        } else if (player1.name == "La Verónica") {
             //  activate the veronica special
 
             //  This damage might need to be nerfed.  Tested out higher values of random damage, but players were more receptive to lower variances.
@@ -580,7 +581,7 @@ $('#spec_button').click(function() {
         //  Player 2 is using the special
         player2.charge = 0;
 
-        if (player2.name == "Anjelita") {
+        if (player2.name == "The Anjelita") {
             //  activate anjelita special
             var resto = (player2.maxHp - player2.hp) * 0.75;
             player2.hp += resto;
@@ -591,7 +592,7 @@ $('#spec_button').click(function() {
             };
             printOnce(specResult);
 
-        } else if (player2.name == "Hartley") {
+        } else if (player2.name == "The Hartley") {
             //  activate the hartley special
             var atkRoll = dice(20) + player2.acc;
 
@@ -623,7 +624,7 @@ $('#spec_button').click(function() {
             }
             player2.ammo = 3;
 
-        } else if (player2.name == "Bernkastel") {
+        } else if (player2.name == "The Bernkastel") {
             //  activate the bernkastel special
 
             var ferBoost = (player1.hp / 4) + 5;
@@ -636,7 +637,7 @@ $('#spec_button').click(function() {
             };
             printOnce(surgeResult);
 
-        } else if (player2.name == "Veronica") {
+        } else if (player2.name == "La Verónica") {
             //  activate the veronica special
 
             //  This damage might need to be nerfed.  Tested out higher values of random damage, but players were more receptive to lower variances.
@@ -678,27 +679,27 @@ $('#spec_button').click(function() {
 //  Change to actual stat backgrounds
 
 $('#anj_button').hover(function() {
-    document.body.style.backgroundImage = "url(../img/core.jpg)";
+    document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
 }, function() {
-    document.body.style.backgroundImage = "url(../img/title.jpg)";
+    document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
 });
 
 $('#har_button').hover(function() {
-    document.body.style.backgroundImage = "url(../img/core.jpg)";
+    document.body.style.backgroundImage = "url(../img/hartley_title.jpg)";
 }, function() {
-    document.body.style.backgroundImage = "url(../img/title.jpg)";
+    document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
 });
 
 $('#ber_button').hover(function() {
-    document.body.style.backgroundImage = "url(../img/core.jpg)";
+    document.body.style.backgroundImage = "url(../img/bernkastel_title.jpg)";
 }, function() {
-    document.body.style.backgroundImage = "url(../img/title.jpg)";
+    document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
 });
 
 $('#ver_button').hover(function() {
-    document.body.style.backgroundImage = "url(../img/core.jpg)";
+    document.body.style.backgroundImage = "url(../img/veronica_title.jpg)";
 }, function() {
-    document.body.style.backgroundImage = "url(../img/title.jpg)";
+    document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
 });
 
 //  Move descriptions / probabilities
@@ -709,7 +710,7 @@ function hoverOff() {
 }
 
 function attackHov() {
-    var atkText = "Attack!\n\n Fire your broadsides at the enemy.  If you hit, take out a portion of their health!  You currently have a " + atkProb() + "% chance of hitting the enemy.";
+    var atkText = "Attack!\n\nFire your broadsides at the enemy.  If you hit, take out a portion of their health!  You currently have a " + atkProb() + "% chance of hitting the enemy.";
     $('#moveDesc').text(atkText);
 }
 
@@ -731,23 +732,23 @@ function pldrHov() {
 function specHov() {
     var specText = {};
     if (clientID == "player1") {
-        if (player1.name == "Anjelita") {
+        if (player1.name == "The Anjelita") {
             specText = "Restoration!\n\nActivate your special ability to restore 75% of the damage you have taken.  (Can only be used once)";
-        } else if (player1.name == "Hartley") {
+        } else if (player1.name == "The Hartley") {
             specText = "Imperial Discipline!\n\nActivate your special ability to instantly reload all cannons and let loose an attack.  (Can only be used once)";
-        } else if (player1.name == "Bernkastel") {
+        } else if (player1.name == "The Bernkastel") {
             specText = "Hooksurge!\n\nActivate your special ability to launch harpoons at your opponent and pull them closer, boosting your chances of being able to plunder them permanently.  (Can only be used once)";
-        } else if (player1.name == "Veronica") {
+        } else if (player1.name == "La Verónica") {
             specText = "Hellfire Barrage!\n\nActivate your special ability to unleash an inferno of cannonfire upon your opponent, dealing massive damage.  (Can only be used once)";
         }
     } else if (clientID == "player2") {
-        if (player2.name == "Anjelita") {
+        if (player2.name == "The Anjelita") {
             specText = "Restoration!\n\nActivate your special ability to restore 75% of the damage you have taken.  (Can only be used once)";
-        } else if (player2.name == "Hartley") {
+        } else if (player2.name == "The Hartley") {
             specText = "Imperial Discipline!\n\nActivate your special ability to instantly reload all cannons and let loose an attack.  (Can only be used once)";
-        } else if (player2.name == "Bernkastel") {
+        } else if (player2.name == "The Bernkastel") {
             specText = "Hooksurge!\n\nActivate your special ability to launch harpoons at your opponent and pull them closer, boosting your chances of being able to plunder them permanently.  (Can only be used once)";
-        } else if (player2.name == "Veronica") {
+        } else if (player2.name == "La Verónica") {
             specText = "Hellfire Barrage!\n\nActivate your special ability to unleash an inferno of cannonfire upon your opponent, dealing massive damage.  (Can only be used once)";
         }
     }
@@ -778,7 +779,8 @@ socket.on('dispMsg', function(msg) {
 });
 
 socket.on('contextSwitch', function(data) {
-    document.body.style.backgroundImage = "url(../img/core.jpg)";
+    document.body.style.backgroundImage = "url(../img/core-screen_blank.jpg)";
+    $("#core_commands").prop("disabled", false);
     hideShips();
     showActions();
 });

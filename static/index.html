@@ -35,13 +35,13 @@
         <div id="input">
             
             <div id="ship_commands">
-                <input id="anj_button" class="shipButton" type=button value="Anjelita"/>
-                <input id="har_button" class="shipButton" type="button" value="Hartley"/>
-                <input id="ber_button" class="shipButton" type="button" value="Bernkastel"/>
-                <input id="ver_button" class="shipButton" type="button" value="Veronica"/>
+                <input id="anj_button" class="shipButton" type="button"/>
+                <input id="har_button" class="shipButton" type="button"/>
+                <input id="ber_button" class="shipButton" type="button"/>
+                <input id="ver_button" class="shipButton" type="button"/>
             </div>
 
-            <div id="core_commands">
+            <div id="core_commands" disabled>
                 <div id="atkHover" class="actHover" hidden></div>
                 <input id="atk_button" class="actButton" type="button" value="Attack" hidden/> <br>
 
@@ -63,19 +63,26 @@
         <div id="output">
             <!--<textarea id="display" wrap=on readonly hidden></textarea>-->
 
-            <textarea id="moveDesc" wrap="on" readonly hidden>Attack the enemy ship and plunder them for riches beyond your wildest dreams!\n\nThe lower your opponent's health, the better your chances will be for successfully plundering them.  Beware!  If you destroy your enemy completely, you will both lose the game.</textarea>
+            <textarea id="moveDesc" wrap="on" readonly hidden>Attack the enemy ship and plunder them for riches beyond your wildest dreams!
+
+The lower your opponent's health, the better your chances will be for successfully plundering them.  Beware!  If you destroy your enemy completely, you will both lose the game.</textarea>
 
             <textarea id="oppName" class="oppBar" rows="1" wrap="on" readonly hidden></textarea>
-            <textarea id="oppHP" class="oppBar" rows="1" wrap="on" readonly hidden></textarea>
-            <textarea id="oppStatus" class="oppBar" rows="1" wrap="on" readonly hidden></textarea>
+            <div id="oppStats">
+                <textarea id="oppHP" class="oppBar" rows="1" wrap="on" readonly hidden></textarea>
+                <textarea id="oppStatus" class="oppBar" rows="1" wrap="on" readonly hidden></textarea>
+            </div>
 
             <textarea id="ownName" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
-            <textarea id="ownHP" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
-            <textarea id="ownStatus" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
-            <textarea id="ownSpecial" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
-            <textarea id="ownAmmo" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
 
-            <textarea id="altFeedback" rows="3" wrap="on" readonly hidden></textarea>
+            <div id="ownStats">
+                <textarea id="ownHP" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
+                <textarea id="ownStatus" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
+                <textarea id="ownSpecial" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
+                <textarea id="ownAmmo" class="ownBar" rows="1" wrap="on" readonly hidden></textarea>
+            </div>
+
+            <textarea id="altFeedback" rows="8" wrap="on" readonly hidden></textarea>
         </div>
         
     </div>
