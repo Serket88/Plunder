@@ -254,8 +254,9 @@ textarea.ownBar {
 }
 
 #ownSpecial {
-    left: 460px;
-    width: 150px;
+    left: 455px;
+    width: 165px;
+    overflow: hidden;
 }
 
 #ownAmmo {
