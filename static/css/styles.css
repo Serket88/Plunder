@@ -38,6 +38,20 @@ body {
   margin-left: 2rem;
 }
 
+#mute_button {
+    float: right;
+    margin-top: -30px;
+    margin-right: 25px;
+    height: 2.0rem;
+    width: 100px;
+    font-family: "Rockwell";
+    font-size: 14pt;
+    color: white;
+    background-color: transparent;
+    border-color: white;
+    border-style: solid;
+}
+
 /*  =============  CONTENT FORMATTING  ============  */
 
 .content {

@@ -3,16 +3,25 @@
 */
 
 /*  TODO
+    - Cannon sound for attack
+        - Explosion sound for hit
+        - Splash sound for miss
+    - Carpentry sound for repair/restock
+    - Ocean waves sound for reposition
+    - Swordfight / battle sounds for plunder
+    - Ultimate sounds for special
 
+    - Explosion gif for hit
+    - Splash gif for miss
+    - Additional gif functionality???
 
-        - Create a default background VERY QUICKLY
-
-        - make more feedback for ship selection
+    - add mute/unmute functionality for your sound files
 */
 
 //  ================  GLOBAL VARIABLES  ================
 
 socket = io();
+var muted = false;
 
 //  ================  HELPER FUNCTIONS  ================
 
@@ -97,6 +106,34 @@ function plunProb() {
 //  When a button is pressed, take the appropriate data and send it to the server's shipSelect function.
 
 //  TODO -- possibly move the actual ship data server-side
+
+$('#mute_button').click(function() {
+    if (!muted) {
+        $('#mute_button').val("Unmute");
+        muted = true;
+        //  Mute audio tracks here
+        //backgroundSound.muted = true;
+        //atkSound.muted = true;
+        //hitSound.muted = true;
+        //missSound.muted = true;
+        //represSound.muted = true;
+        //repoSound.muted = true;
+        //plunSound.muted = true;
+        //specSound.muted = true;
+    } else {
+        $('#mute_button').val("Mute");
+        muted = false;
+        //  Unmute audio tracks here
+        //backgroundSound.muted = true;
+        //atkSound.muted = false;
+        //hitSound.muted = false;
+        //missSound.muted = false;
+        //represSound.muted = false;
+        //repoSound.muted = false;
+        //plunSound.muted = false;
+        //specSound.muted = false;
+    }
+});
 
 $('#anj_button').click(function() {
     var anjData = {
@@ -198,12 +235,16 @@ $('#atk_button').click(function() {
         //  Check for reposition flipping
         repoFlip();
 
+        //atkSound.play();
+
         //  Perform attack roll
         var atkRoll = dice(20) + player1.acc;
         player1.ammo--;
 
         //  Proceed if a hit occurs
         if (atkRoll >= player2.man) {
+
+            //hitSound.play();
 
             //  Roll damage
             var dmgRoll = dice(8) + player1.pow;
@@ -227,6 +268,8 @@ $('#atk_button').click(function() {
             };
 
         } else {
+            //missSound.play();
+
             //  send to server
             var atkResult = {
                 id: clientID,
@@ -256,10 +299,15 @@ $('#atk_button').click(function() {
         //  Check for reposition flipping
         repoFlip();
 
+        //atkSound.play();
+
         var atkRoll = dice(20) + player2.acc;
         player2.ammo--;
 
         if (atkRoll >= player1.man) {
+
+            //hitSound.play();
+
             //  Player 2 hits
             var dmgRoll = dice(8) + player2.pow;
             player1.hp -= dmgRoll;
@@ -281,6 +329,9 @@ $('#atk_button').click(function() {
                 socket.emit('gameOver', deadResult);
             };
         } else {
+
+            //missSound.play();
+
             //  send to server
             var atkResult = {
                 id: clientID,
@@ -302,6 +353,9 @@ $('#atk_button').click(function() {
 });
 
 $('#repres_button').click(function() {
+
+    //represSound.play();
+
     //  Check for reposition flipping
     repoFlip();
 
@@ -382,6 +436,9 @@ $('#repres_button').click(function() {
 });
 
 $('#repo_button').click(function() {
+
+    //repoSound.play();
+
     if (clientID == "player1") {
         //  Player 1 is taking the reposition action
         if (!specialFull) {
@@ -436,6 +493,9 @@ $('#repo_button').click(function() {
 });
 
 $('#pldr_button').click(function() {
+
+    //plunSound.play();
+
     //  Check for reposition flipping
     repoFlip();
 
@@ -492,6 +552,9 @@ $('#pldr_button').click(function() {
 });
 
 $('#spec_button').click(function() {
+
+    //specSound.play();
+
     console.log("> " + clientID + "has taken the special action");
 
     if (clientID == "player1") {
@@ -680,26 +743,42 @@ $('#spec_button').click(function() {
 
 $('#anj_button').hover(function() {
     document.body.style.backgroundImage = "url(../img/anjelita_title.jpg)";
+    $('#anj_button').css("background-color", "grey");
+    $('#anj_button').css("opacity", 0.3);
 }, function() {
     document.body.style.backgroundImage = "url(../img/default_title.jpg)";
+    $('#anj_button').css("background-color", "transparent");
+    $('#anj_button').css("opacity", 1);
 });
 
 $('#har_button').hover(function() {
     document.body.style.backgroundImage = "url(../img/hartley_title.jpg)";
+    $('#har_button').css("background-color", "grey");
+    $('#har_button').css("opacity", 0.3);
 }, function() {
     document.body.style.backgroundImage = "url(../img/default_title.jpg)";
+    $('#har_button').css("background-color", "transparent");
+    $('#har_button').css("opacity", 1);
 });
 
 $('#ber_button').hover(function() {
     document.body.style.backgroundImage = "url(../img/bernkastel_title.jpg)";
+    $('#ber_button').css("background-color", "grey");
+    $('#ber_button').css("opacity", 0.3);
 }, function() {
     document.body.style.backgroundImage = "url(../img/default_title.jpg)";
+    $('#ber_button').css("background-color", "transparent");
+    $('#ber_button').css("opacity", 1);
 });
 
 $('#ver_button').hover(function() {
     document.body.style.backgroundImage = "url(../img/veronica_title.jpg)";
+    $('#ver_button').css("background-color", "grey");
+    $('#ver_button').css("opacity", 0.3);
 }, function() {
     document.body.style.backgroundImage = "url(../img/default_title.jpg)";
+    $('#ver_button').css("background-color", "transparent");
+    $('#ver_button').css("opacity", 1);
 });
 
 //  Move descriptions / probabilities

@@ -121,10 +121,42 @@ function statusUpdate() {
 
 socket.on('loadPlayer', function(msg) {
     if (!initialized) {
+        //  Image preloading
+        if (document.images) {
+            anjStats = new Image();
+			harStats = new Image();
+			berStats = new Image();
+            verStats = new Image();
+
+			anjStats.src = "../img/anjelita_title.jpg";
+			harStats.src = "../img/hartley_title.jpg";
+			berStats.src = "../img/bernkastel_title.jpg";
+            verStats.src = "../img/veronica_title.jpg";
+        }
+
+        //  Audio preloading and initialization
+        //var backgroundSound = new Audio("insert/path/here");
+        //backgroundSound.loop = true;
+        //backgroundSound.play();
+
+        //var atkSound = new Audio("insert/path/here");
+        //var hitSound = new Audio("insert/path/here");
+        //var missSound = new Audio("insert/path/here");
+
+        //var represSound = new Audio("insert/path/here");
+        //var repoSound = new Audio("insert/path/here");
+        //var plunSound = new Audio("insert/path/here");
+        //var specSound = new Audio("insert/path/here");
+
+        //  Global initialization
         clientID = msg.id;
         initialized = true;
-        console.log(">  Initialized with the ID " + clientID);
+
+        //  Initial disable
         disableActions();
+
+        //  Console report
+        console.log(">  Initialized with the ID " + clientID);
     }
 });
 
